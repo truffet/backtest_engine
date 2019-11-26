@@ -1,14 +1,18 @@
 # backtest_engine
-Building an engine based on OmniSci (open source) for GPU acceleration
+Building a backtest engine for financial models based on OmniSci
 
-# requirements
-Git
-python
-OmniSci for Ubuntu
-pymapd
-cuDF
-sqlAlchemy
+# install requirements
+Git  
+python3  
+OmniSci for Ubuntu (define first superuser as 'truffet' with password 'bodyboard' along with 'test' database)  
+pymapd  
+cuDF  
+requests(python)  
 
 # Quick launch guide
-1- start server -> "start_server.sh"
-2- connetc to database -> "connect_db.py"
+1- start server -> "start_server.sh"  
+2- launch omnisci CLI -> "omnisci_cli.sh"  
+
+# Launch Backtest on bitcoin/bitmex_perps
+- create database bitmex with 'init.sh'  
+- 

@@ -31,7 +31,10 @@ elif [ $# -gt 1 ]; then
 			echo "Execution over"
 			shift
 		done
-
+	
+	else
+		echo "Use the 'help' argument to list available commands"
+	
 	fi
 
 else
