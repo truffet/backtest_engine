@@ -14,5 +14,7 @@ requests(python)
 2- launch omnisci CLI -> "omnisci_cli.sh"  
 
 # Launch Backtest on bitcoin/bitmex_perps
-- create database bitmex with 'init.sh'  
-- 
+- create or update trades history data in database with 'init.sh'  
+
+# Issues to be fixed
+- find a way to handle max-rows in a database if needed (2^62 default limit)

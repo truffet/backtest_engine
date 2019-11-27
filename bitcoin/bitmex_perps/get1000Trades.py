@@ -1,8 +1,8 @@
 import requests
 
-def build_url(timestamp, baseUrl):
-	if timestamp != "":
-		return (baseUrl + "&startTime=" + timestamp)
+def build_url(startTime, baseUrl):
+	if startTime != "":
+		return (baseUrl + "&startTime=" + str(startTime))
 	return (baseUrl)
 
 def get_data(fullUrl):
@@ -17,25 +17,16 @@ def toJson(response):
 	except Exception as e:
 		return ("Error: " + str(e))
 
-def get1000Trades(timestamp, lastTradeID):
-	baseUrl = "https://www.bitmex.com/api/v1/trade?symbol=XBT%3Aperpetual&count=1"
-	fullUrl = build_url(timestamp, baseUrl)
-	response = get_data(fullUrl)
-	data = toJson(response)
-
+def handle_response(response, data):
 	if (str(response).startswith("Error")):
-		print(1000)
-		print(type([response]))
-		print([response])
+		return([1000] + [data])
 	elif (str(data).startswith("Error")):
-		print(1001)
-		print(type([data]))
-		print([data])
+		return([1001] + [data])
 	else:
-		print(response)
-		print(response.status_code)
-		print(type(data))
-		print(data)
+		return([response.status_code] + data)
 
-#test
-get1000Trades("","")
+def get1000Trades(startTime, lastTradeID):
+	baseUrl = "https://www.bitmex.com/api/v1/trade?symbol=XBT%3Aperpetual&count=2"
+	response = get_data(build_url(startTime, baseUrl))
+	result = handle_response(response, toJson(response))
+	return result
