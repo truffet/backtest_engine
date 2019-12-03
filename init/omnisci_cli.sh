@@ -1,2 +1,2 @@
 #!/bin/bash
-$OMNISCI_PATH/bin/omnisql test -u truffet -p bodyboard
+$OMNISCI_PATH/bin/omnisql bitmex -u truffet -p bodyboard
