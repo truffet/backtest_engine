@@ -12,6 +12,19 @@ def count_rows(con):
 	print("Number of rows in timeCursor: " + str(nb_of_rows))
 	return (nb_of_rows)
 
+def init_params(con):
+	nb_of_rows = count_rows(con)
+	if (nb_of_rows == 0):
+		print("Table is empty, will start loading data from origin")
+		return ("")
+	else:
+		print("Table is not empty, will start updating data from last saved point")
+		query = "SELECT tradeTime FROM timeCursor"
+		df = con.select_ipc_gpu(query)
+		df.head()
+		return("")
+
+
 def add_row_to_table(row, con):
 	print("Adding new row to tradesHistory")
 	df = pd.DataFrame({"tradeTime": [row["timestamp"]], "symbol": [row["symbol"]], "side": [row["side"]], "size": [row["size"]], "price": [row["price"]], "tickDirection": [row["tickDirection"]], "trdMatchID": [row["trdMatchID"]], "grossValue": [row["grossValue"]], "homeNotional": [row["homeNotional"]], "foreignNotional": [row["foreignNotional"]]}, columns=['tradeTime', 'symbol', 'side', 'size', 'price', 'tickDirection', 'trdMatchID', 'grossValue', 'homeNotional', 'foreignNotional'])
@@ -45,23 +58,13 @@ con = connect_to_db()
 #create tables if they don't exist already
 setup_env(con)
 
-#calculate number of rows to see if fresh start or update needed
-nb_of_rows = count_rows(con)
-
-#init values for data fetching based on previous calculus
-if (nb_of_rows == 0):
-	print("Table is empty, will start loading data from origin")
-	startTime = ""
-	lastTradeID = ""
-else:
-	print("Table is not empty, will start updating data from last saved point")
-
 
 #fetch trades by blocks of 1000 or less 
 while (True):
 
+	startTime = init_params(con)
 	#fetch data from bitmex API
-	response = get1000Trades(startTime, lastTradeID)
+	response = get1000Trades(startTime)
 
 	#handle responses:
 	if (str(response).startswith("Error")):
@@ -71,7 +74,7 @@ while (True):
 		print(str(response))
 		break
 	else:
-		add_response_to_table(response, con)
+		#add_response_to_table(response, con)
 		if (len(response) < 1000):
 			print("Less than a 1000 trades fetched, loading to database. Last response handled, end of update")
 			break
