@@ -24,14 +24,12 @@ def init_params(con):
 		df.head()
 		return("")
 
-
 def add_row_to_table(row, con):
 	print("Adding new row to tradesHistory")
 	df = pd.DataFrame({"tradeTime": [row["timestamp"]], "symbol": [row["symbol"]], "side": [row["side"]], "size": [row["size"]], "price": [row["price"]], "tickDirection": [row["tickDirection"]], "trdMatchID": [row["trdMatchID"]], "grossValue": [row["grossValue"]], "homeNotional": [row["homeNotional"]], "foreignNotional": [row["foreignNotional"]]}, columns=['tradeTime', 'symbol', 'side', 'size', 'price', 'tickDirection', 'trdMatchID', 'grossValue', 'homeNotional', 'foreignNotional'])
 	print(df)
 	con.load_table_columnar("tradesHistory", df, preserve_index=False)
 
-	
 def save_progress(row, con):
 	print("Saving progress to timeCursor")
 	query = "DELETE FROM timeCursor;"
@@ -39,7 +37,6 @@ def save_progress(row, con):
 	df = pd.DataFrame({"tradeTime": [row["timestamp"]], "trdMatchID": [row["trdMatchID"]]}, columns=['tradeTime', 'trdMatchID'])
 	print(df)
 	con.load_table_columnar("timeCursor", df, preserve_index=False)
-
 
 def add_response_to_table(response, con):
 	del response[0]
