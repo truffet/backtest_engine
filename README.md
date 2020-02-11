@@ -17,5 +17,6 @@ requests(python)
 - start server -> "start_server.sh"
 - create or update trades history data in database with 'init.sh'  
 
-# Issues to be fixed
-- find a way to handle max-rows in a database if needed (2^62 default limit)
+# Issues to be fixed / ideas
+- find a way to handle max-rows in a database if needed (2^62 default limit)  
+- maybe create a default database that lists support exchanges and markets?
