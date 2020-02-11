@@ -4,7 +4,7 @@ Building a backtest engine for financial models based on OmniSci
 # install requirements
 Git  
 python3 (should already be installed on ubuntu)  
-OmniSci for Ubuntu (define first superuser as 'truffet' with password 'bodyboard' along with 'bitmex' database)  
+OmniSci for Ubuntu (create user truffet as default superuser with bodyboard password and bitmex database)  
 pymapd  
 cuDF  
 requests(python)  
@@ -14,8 +14,8 @@ requests(python)
 2- launch omnisci CLI -> "omnisci_cli.sh"  
 
 # Launch Backtest on bitcoin/bitmex_perps
-- start server -> "start_server.sh"
-- create or update trades history data in database with 'init.sh'  
+- start server -> "start_server.sh" under init file at root
+- to create or update trades history data in database, simply execute python file "update_db.py"  
 
 # Issues to be fixed / ideas
 - find a way to handle max-rows in a database if needed (2^62 default limit)  
