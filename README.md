@@ -3,7 +3,7 @@ Building a backtest engine for financial models based on OmniSci
 
 # install requirements
 Git  
-python3  
+python3 (should already be installed on ubuntu) 
 OmniSci for Ubuntu (define first superuser as 'truffet' with password 'bodyboard' along with 'bitmex' database)  
 pymapd  
 cuDF  
