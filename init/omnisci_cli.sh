@@ -1,2 +1,2 @@
 #!/bin/bash
-$OMNISCI_PATH/bin/omnisql bitmex -u truffet -p bodyboard
+$OMNISCI_PATH/bin/omnisql omnisci -u admin -p HyperInteractive

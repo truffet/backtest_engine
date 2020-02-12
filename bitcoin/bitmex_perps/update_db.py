@@ -49,11 +49,9 @@ def add_response_to_table(response, con):
 		size -=1
 
 
-#connect to omnisci bitmex database
-con = connect_to_db()
-
-#create tables if they don't exist already
-setup_env(con)
+#create user, database and tables for loading data. 
+#then, assign connection in return of function
+con = setup_env()
 
 
 #fetch trades by blocks of 1000 or less 
