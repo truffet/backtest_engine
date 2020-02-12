@@ -6,7 +6,7 @@ Git
 python3 (should already be installed on ubuntu)  
 OmniSci for Ubuntu  
 anaconda (https://www.anaconda.com/distribution/)  
-conda-forge / pymapd / CUDA  
+-> conda-forge / pymapd / CUDA / requests  
 cuDF  
 requests(python)  
 

@@ -1,5 +1,4 @@
 from get1000Trades import get1000Trades
-from connect_to_db import connect_to_db
 from init import setup_env
 
 import pyarrow as pa
@@ -57,9 +56,17 @@ con = setup_env()
 #fetch trades by blocks of 1000 or less 
 while (True):
 
+	#check if tables are empty or not and return start time
 	startTime = init_params(con)
+	
+	#to avoid adding two times same entry (last previosu and first next)
+	if startTime == "":
+		startPoint = 0
+	else:
+		startPoint = 1
+
 	#fetch data from bitmex API
-	response = get1000Trades(startTime)
+	response = get1000Trades(startTime, startPoint)
 
 	#handle responses:
 	if (str(response).startswith("Error")):
@@ -70,6 +77,7 @@ while (True):
 		break
 	else:
 		#add_response_to_table(response, con)
+		print(str(response))
 		if (len(response) < 1000):
 			print("Less than a 1000 trades fetched, loading to database. Last response handled, end of update")
 			break

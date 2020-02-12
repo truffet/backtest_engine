@@ -25,8 +25,9 @@ def handle_response(response, data):
 	else:
 		return([response.status_code] + data)
 
-def get1000Trades(startTime):
-	baseUrl = "https://www.bitmex.com/api/v1/trade?symbol=XBT%3Aperpetual&count=2"
+def get1000Trades(startTime, startPoint):
+	rawUrl = "https://www.bitmex.com/api/v1/trade?symbol=XBT%3Aperpetual&count=2&start="
+	baseUrl = rawUrl + str(startPoint)
 	response = get_data(build_url(startTime, baseUrl))
 	result = handle_response(response, toJson(response))
 	return result
