@@ -6,8 +6,10 @@ Git
 python3 (should already be installed on ubuntu)  
 MySQL/MySQL server(root password bodyboard)  
 requests(python)  
-pip  
-MySQL Connector  
+pip3  
+MySQL Connector 
+pyarrow  
+pandas  
 
 # Quick launch guide  
 
