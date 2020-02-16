@@ -1,41 +1,62 @@
-from pymapd import connect
+import mysql.connector
+
+def connect_to_user():
+	#connect to mysql root user session
+	myuser = mysql.connector.connect(
+		host="localhost",
+		user="root",
+		passwd="bodyboard"
+	)
+	myuser.autocommit = True
+	#print success
+	print("\nConnected to root user")
+	#return
+	return(myuser)
+
+def connect_to_db():
+	#connect to database
+	mydb = mysql.connector.connect(
+		host="localhost",
+		user="root",
+		passwd="bodyboard",
+		database="bitmex_perps"
+	)
+	mydb.autocommit = True
+	#print success
+	print("\nConnected to database bitmex_perps")
+	#return
+	return(mydb)
 
 
-def connect_to_db(db, user, password):
-	uri = "mapd://" + user + ":" + password + "@localhost:6274/" + db + "?protocol=binary"
-	con = connect(uri=uri)
-	print("Connected to database " + db)
-	return(con)
+def create_database():
+	#connect to mysql root user session
+	m = connect_to_user()
+	mycursor = m.cursor()
+	#create database
+	mycursor.execute("CREATE DATABASE IF NOT EXISTS bitmex_perps")
+	#print databases
+	mycursor.execute("SHOW DATABASES")
+	print("\nList of databases:")
+	for x in mycursor:
+		print(x)
 
-def create_superuser(con, name, password):
-	try:
-		request = "CREATE USER " + name + " (is_super='true', password='" + password + "');"
-		con.execute(request)
-		print("Created superuser " + name)
-	except Exception as e:
-		print("Error: " + str(e))
 
-def create_db(con, name, owner):
-	request = "CREATE DATABASE IF NOT EXISTS " + name + " (owner='" + owner + "');"
-	con.execute(request)
-	print("Created database " + name + " if it does not exist already, the owner is: " + owner)
+def create_tables():
 
-def alter_user_default_db(con, name, default_db):
-	request = "ALTER USER " + name + " (default_db = '" + default_db + "');"
-	con.execute(request)
-	print("Changed default db of " + name + " to " + default_db)
-
-def create_bitmex_tables(con):
-	con.execute("CREATE TABLE IF NOT EXISTS tradesHistory (tradeTime TEXT, symbol TEXT, side TEXT, size INTEGER, price FLOAT, tickDirection TEXT, trdMatchID TEXT, grossValue FLOAT, homeNotional FLOAT, foreignNotional FLOAT);")
-	con.execute("CREATE TABLE IF NOT EXISTS timeCursor (tradeTime TEXT, trdMatchID TEXT);")
-	print("Created tables tradesHistory and timeCursor if it does not already exist")
+	#connect to database
+	m = connect_to_db()
+	mycursor= m.cursor()
+	#create tables
+	mycursor.execute("CREATE TABLE IF NOT EXISTS tradesHistory (tradeTime DATETIME(3), side VARCHAR(255), size BIGINT(255), price FLOAT(53), tickDirection VARCHAR(255), trdMatchID VARCHAR(255), grossValue FLOAT(53), homeNotional FLOAT(53), foreignNotional FLOAT(53))")
+	mycursor.execute("CREATE TABLE IF NOT EXISTS timeCursor (tradeTime VARCHAR(255), trdMatchID VARCHAR(255))")
+	#print tables
+	print("\nList of tables:")
+	mycursor.execute("SHOW TABLES")
+	for x in mycursor:
+		print(x)
 
 
 def setup_env():
-	con = connect_to_db("omnisci", "admin", "HyperInteractive")
-	create_superuser(con, "bitmex_superuser", "bitmex_pass")
-	create_db(con, "bitmex_db", "bitmex_superuser")
-	alter_user_default_db(con, "bitmex_superuser", "bitmex_db")
-	con = connect_to_db("bitmex_db", "bitmex_superuser", "bitmex_pass")
-	create_bitmex_tables(con)
-	return(con)
+	print("\nSetting up env..")
+	create_database()
+	create_tables()
