@@ -47,7 +47,7 @@ def create_tables():
 	m = connect_to_db()
 	mycursor= m.cursor()
 	#create tables
-	mycursor.execute("CREATE TABLE IF NOT EXISTS tradesHistory (tradeTime DATETIME(3), side VARCHAR(255), size BIGINT(255), price FLOAT(53), tickDirection VARCHAR(255), trdMatchID VARCHAR(255), grossValue FLOAT(53), homeNotional FLOAT(53), foreignNotional FLOAT(53))")
+	mycursor.execute("CREATE TABLE IF NOT EXISTS tradesHistory (tradeTime DATETIME(6), side VARCHAR(255), size BIGINT(255), price FLOAT(53), tickDirection VARCHAR(255), trdMatchID VARCHAR(255), grossValue FLOAT(53), homeNotional FLOAT(53), foreignNotional FLOAT(53))")
 	mycursor.execute("CREATE TABLE IF NOT EXISTS timeCursor (tradeTime VARCHAR(255), trdMatchID VARCHAR(255))")
 	#print tables
 	print("\nList of tables:")

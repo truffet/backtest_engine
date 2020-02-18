@@ -7,7 +7,7 @@ python3 (should already be installed on ubuntu)
 MySQL/MySQL server(root password bodyboard)  
 requests(python)  
 pip3  
-MySQL Connector 
+MySQL Connector  
 pyarrow  
 pandas  
 
