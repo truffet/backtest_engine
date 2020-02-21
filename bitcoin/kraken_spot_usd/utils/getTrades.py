@@ -26,7 +26,6 @@ def handle_response(response, data):
 def getTrades(since):
 	rawUrl = "https://api.kraken.com/0/public/Trades?pair=xbtusd&since="
 	baseUrl = rawUrl + str(since)
-	print(baseUrl)
 	response = get_data(baseUrl)
 	result = handle_response(response, toJson(response))
 	return result

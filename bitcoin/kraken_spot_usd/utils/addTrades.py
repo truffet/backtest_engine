@@ -31,15 +31,7 @@ def upload_new_data(response, connection):
 	query = "INSERT INTO tradesHistory (unix_time, price, volume, side, order_type) VALUES (%s, %s, %s, %s, %s)"
 	mycursor.executemany(query, values)
 
-	#test purposes:
-	#mycursor = connection.cursor()
-	#mycursor.execute("SELECT * FROM tradesHistory")
-	#myresult = mycursor.fetchall()
-	#print("\ntradesHistory:")
-	#for x in myresult:
-	#	print(x)
-
-	#return last row index
+	#return last for next update
 	return(data['last'])
 
 def save_progress(last, connection):
@@ -52,13 +44,6 @@ def save_progress(last, connection):
 	query = "INSERT INTO timeCursor (since) VALUES (%s)"
 	values = (last,)
 	mycursor.execute(query, values)
-
-	#test purposes:
-	mycursor.execute("SELECT * FROM timeCursor")
-	myresult = mycursor.fetchall()
-	print("\ntime cursor:")
-	for x in myresult:
-		print(x)
 
 
 def addTrades(response, connection, since):

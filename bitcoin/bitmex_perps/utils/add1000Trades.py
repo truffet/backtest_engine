@@ -17,27 +17,27 @@ def avoid_duplicates(response, startingPoint):
 			x+=1		
 	return(response)
 
-def add_row(row, connection):
-	mycursor = connection.cursor()
-	query = "INSERT INTO tradesHistory (tradeTime, side, size, price, tickDirection, trdMatchID, grossValue, homeNotional, foreignNotional) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
-	
+def add_row(row):
 	#add '000' to get microseconds format
 	line = row['timestamp']
 	index = line.find('Z')
 	time = line[:index] + '000' + line[index:]
 
 	values = (datetime.strptime(time, '%Y-%m-%dT%H:%M:%S.%fZ'), row['side'], row['size'], row['price'], row['tickDirection'], row['trdMatchID'], row['grossValue'], row['homeNotional'], row['foreignNotional'])
-	mycursor.execute(query, values)
+	return(values)
 
 
 def upload_new_data(response, connection):
 	i = 0
 	j = len(response)
+	values = []
 	#add data row by row
 	while(i < j):
-		add_row(response[i], connection)
+		values.append(add_row(response[i]))
 		i+=1
-
+	mycursor = connection.cursor()
+	query = "INSERT INTO tradesHistory (tradeTime, side, size, price, tickDirection, trdMatchID, grossValue, homeNotional, foreignNotional) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
+	mycursor.executemany(query, values)
 	#return last row index
 	return(j-1)
 

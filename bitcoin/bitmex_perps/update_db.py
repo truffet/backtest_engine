@@ -42,14 +42,15 @@ def update():
 			print("\nresponse: " + str(response))
 			break
 		else:
+			size = len(response)
 			#save data from bitmex api to database
 			start = add1000Trades(response, connection, startingPoint, start)
-			if (len(response) < 1000):
+			if (size < 1000):
 				print("\nLess than a 1000 trades fetched, loading to database. Last response handled, end of update")
 				break
-			
+		
 		#wait 2 seconds to avoid api rate limit
 		print("\n1000 trades batch fetched, loading to database...\nwaiting 2s before requesting more data...")
 		sleep(2)
 
-		break;#to avoid infinite loop for test purposes
+		#break;#to avoid infinite loop for test purposes

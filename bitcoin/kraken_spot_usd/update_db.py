@@ -25,7 +25,6 @@ def update():
 		
 		#fetch saving point to pursue update
 		since = last_save(connection)[0]
-		print(type(since))
 		print("\nfetched since from table: " + str(since))
 
 		response = getTrades(since)
@@ -42,7 +41,7 @@ def update():
 			else:
 				#upload data from kraken to database
 				addTrades(data, connection, since)
-				break
+				#break
 
 		#avoid API rate limit	
 		sleep(2)
