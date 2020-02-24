@@ -16,4 +16,4 @@ pandas
 # Launch Backtest on bitcoin/bitmex_perps  
 
 # Issues to be fixed / ideas  
-
+-handle keyboard interupt or find a way to terminate kraken loop naturally

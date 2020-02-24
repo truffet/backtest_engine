@@ -5,6 +5,16 @@ from init import connect_to_db
 import pyarrow as pa
 import pandas as pd
 from time import sleep
+import signal
+
+
+#signal handler to prevent interrupt in the middle of data saving
+def signal_handler(signal, frame):
+	global finish
+	finish = True
+#set var to determine if clean exit needed or not, by default False
+finish = False
+signal.signal(signal.SIGINT, signal_handler)
 
 
 def last_save(connection):
@@ -31,6 +41,11 @@ def update():
 	#fetch trades by blocks of 1000 in a loop 
 	while (True):
 
+		#clean interrupt before requesting more data
+		if finish:
+			print("\nupdate stopped cleanly :)")
+			break
+			
 		#fetch last save or ("","") if empty
 		startingPoint = last_save(connection)
 

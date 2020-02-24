@@ -4,6 +4,17 @@ from utils.addTrades import addTrades
 
 from time import sleep
 from ast import literal_eval
+import signal
+
+
+#signal handler to prevent interrupt in the middle of data saving
+def signal_handler(signal, frame):
+	global finish
+	finish = True
+#set var to determine if clean exit needed or not, by default False
+finish = False
+signal.signal(signal.SIGINT, signal_handler)
+
 
 def last_save(connection):
 	mycursor = connection.cursor()
@@ -23,6 +34,11 @@ def update():
 
 	while (True):
 		
+		#clean interrupt before requesting more data
+		if finish:
+			print("\nupdate stopped cleanly :)")
+			break
+
 		#fetch saving point to pursue update
 		since = last_save(connection)[0]
 		print("\nfetched since from table: " + str(since))
@@ -43,7 +59,8 @@ def update():
 				addTrades(data, connection, since)
 				#break
 
-		#avoid API rate limit	
+		#avoid API rate limit
+		print("\nData fetched and stored.. waiting 2s before next call")	
 		sleep(2)
 
 	print("Finished uploading new data")
