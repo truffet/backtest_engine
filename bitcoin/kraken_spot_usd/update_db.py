@@ -34,7 +34,7 @@ def update():
 
 	while (True):
 		
-		#clean interrupt before requesting more data
+		#clean interrupt
 		if finish:
 			print("\nupdate stopped cleanly :)")
 			break
@@ -60,7 +60,7 @@ def update():
 				#break
 
 		#avoid API rate limit
-		print("\nData fetched and stored.. waiting 2s before next call")	
-		sleep(2)
+		print("\nData fetched and stored.. waiting 3s before next call")	
+		sleep(3)
 
 	print("Finished uploading new data")

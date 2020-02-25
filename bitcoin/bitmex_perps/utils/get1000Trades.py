@@ -1,4 +1,5 @@
 import requests
+from requests.exceptions import Timeout
 
 def build_url(startTime, baseUrl):
 	if startTime != "":
@@ -7,7 +8,9 @@ def build_url(startTime, baseUrl):
 
 def get_data(fullUrl):
 	try:
-		return (requests.get(fullUrl))
+		return (requests.get(fullUrl, timeout=(10,10)))
+	except Timeout:
+		return ("Error: 'read or write timeout on get method'")
 	except Exception as e:
 		return ("Error: " + str(e))
 

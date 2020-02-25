@@ -1,15 +1,17 @@
 import requests
-
+from requests.exceptions import Timeout
 
 def get_data(fullUrl):
 	try:
-		return (requests.get(fullUrl))
+		return (requests.get(fullUrl, timeout=(10,10)))
 	except Exception as e:
 		return ("Error: " + str(e))
 
 def toJson(response):
 	try:
 		return(response.json())
+	except Timeout:
+		return ("Error: 'read or write timeout on get method'")
 	except Exception as e:
 		return ("Error: " + str(e))
 

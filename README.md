@@ -10,10 +10,13 @@ pip3
 MySQL Connector  
 pyarrow  
 pandas  
+sudo apt-get install python3-matplotlib  
 
 # Quick launch guide  
 
-# Launch Backtest on bitcoin/bitmex_perps  
+# Launch data update  
 
 # Issues to be fixed / ideas  
--handle keyboard interupt or find a way to terminate kraken loop naturally
+- prepare for system or program unexpected shutdown by comparing data fetched and data stored  
+- handle api rate limit properly(check allowance)  
+- 'str' object has no attribute 'json' -> handle this error properly
