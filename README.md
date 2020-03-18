@@ -11,6 +11,8 @@ MySQL Connector
 pyarrow  
 pandas  
 sudo apt-get install python3-matplotlib  
+pip3 install SQLAlchemy  
+pip3 install plotly==4.5.4  
 
 # Quick launch guide  
 

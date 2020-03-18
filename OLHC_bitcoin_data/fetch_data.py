@@ -10,7 +10,7 @@ def fetch_data():
 	)
 	connection.autocommit = True
 	mycursor = connection.cursor()
-	mycursor.execute("SELECT unix_time, price, volume FROM tradesHistory limit 1000")
+	mycursor.execute("SELECT unix_time, price, volume FROM tradesHistory limit 10000")
 	#list of tuples
 	myresult = mycursor.fetchall()
 	output = []
