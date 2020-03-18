@@ -12,7 +12,7 @@ def fetch_data():
 	)
 	connection.autocommit = True
 	mycursor = connection.cursor()
-	mycursor.execute("SELECT * FROM 4H")
+	mycursor.execute("SELECT * FROM 24H")
 	#list of tuples
 	myresult = mycursor.fetchall()
 	return(myresult)
