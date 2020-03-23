@@ -21,4 +21,4 @@ pip3 install plotly==4.5.4
 # Issues to be fixed / ideas  
 - prepare for system or program unexpected shutdown by comparing data fetched and data stored  
 - handle api rate limit properly(check allowance)  
-- 'str' object has no attribute 'json' -> handle this error properly
+- 'str' object has no attribute 'json' -> handle this error properly (occurs when fetching data from kraken api)
