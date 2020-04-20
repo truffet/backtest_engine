@@ -1,5 +1,5 @@
 # backtest_engine
-Building a backtest engine for financial models based on OmniSci
+Building a backtest engine for Bitcoin Markets  
 
 # install requirements
 Git  
@@ -12,11 +12,7 @@ pyarrow
 pandas  
 python3-matplotlib  
 SQLAlchemy  
-plotly
-
-# Quick launch guide  
-
-# Launch data update  
+plotly   
 
 # Issues to be fixed / ideas  
 - prepare for system or program unexpected shutdown by comparing data fetched and data stored  
