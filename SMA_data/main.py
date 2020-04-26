@@ -12,7 +12,7 @@ while (a < b):
 	print(periods[a])
 	data = fetch_data(periods[a])
 	i, j = 0, len(data)
-	SMA = {10: [], 20: [], 50: [], 100: [], 200: []}
+	SMA = {10: [], 20: [], 50: [], 100: [], 200: [], 'date': []}
 	sma_list = [10, 20, 50, 100, 200]
 	y = len(sma_list)
 	while(i < j):
@@ -23,6 +23,7 @@ while (a < b):
 			else:
 				SMA[sma_list[x]].append(0)
 			x+=1
+		SMA['date'].append(data[i][1])
 		i+=1
 
 	df2 = pd.DataFrame.from_dict(SMA)

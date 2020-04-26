@@ -10,7 +10,7 @@ def fetch_data(table_name):
 	)
 	connection.autocommit = True
 	mycursor = connection.cursor()
-	query = "SELECT * FROM " + table_name
+	query = "SELECT close, date FROM " + table_name
 	mycursor.execute(query)
 	#list of tuples
 	myresult = mycursor.fetchall()
