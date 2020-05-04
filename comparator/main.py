@@ -10,7 +10,7 @@ while (i < j):
 	dVolMA = fetch_data('*', ('dVolumeMA_' + periods[i]))
 	dSMAs = fetch_data('*',('dSMAs_' + periods[i]))
 	size = len(dVolMA)
-	subject = size-1-4 #just for test purposes to get bottom
+	subject = size-1 #using last available period
 	score_list = []
 	x = 0
 	count = 0
