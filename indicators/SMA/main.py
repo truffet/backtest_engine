@@ -5,7 +5,6 @@ from sma import sma
 from dsma import dsma
 from store_SMA import store_SMA
 
-#periods = ['1Min', '5Min', '15Min', '30Min', '1H', '2H', '4H', '6H', '12H', '24H']
 periods = ['1H', '4H', '24H']
 a, b = 0, len(periods)
 

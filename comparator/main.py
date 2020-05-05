@@ -40,4 +40,11 @@ while (i < j):
 	)
 	fig.show()
 
+	#top 10 highest scores
+	score_list.sort(key = lambda x: x[0])
+	i = 0
+	while (i < 10):
+		print(score_list[i])
+		i+=1
+
 	i+=1
