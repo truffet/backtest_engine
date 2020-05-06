@@ -1,14 +1,5 @@
 from decimal import *
 
-def VolMA_calculator2(period, data, index):
-	i, j = (index-period+1), period
-	tmp = 0
-	while(i <= index):
-		tmp = tmp + data[i][0]
-		i+=1
-	return(float(Decimal(tmp)/Decimal(period)))
-
-
 def VolMA_calculator(period, data, index):
 	i, j = 0, period
 	tmp = 0
