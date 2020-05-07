@@ -19,9 +19,16 @@ while (i < j):
 	
 	dVolMA = fetch_data('*', ('dVolumeMA_' + periods[i]))
 	dSMAs = fetch_data('*',('dSMAs_' + periods[i]))
+	ATR = fetch_data('*', ('ATR_' + periods[i]))
+
+	print(len(dVolMA))
+	print(len(dSMAs))
+	print(len(ATR))
+
 	size = len(dVolMA)
 	subject = size-1-52 #using last available period
 	score_list = {
+		'ATR_score': [],
 		'dVolMA_score': [],
 		'dSMA10_score': [],
 		'dSMA20_score': [],
@@ -35,8 +42,9 @@ while (i < j):
 	success, failure = 0, 0
 
 	while (x < subject):
-		if (dVolMA[x][0] == None or dSMAs[x][0] == None or dSMAs[x][1] == None or dSMAs[x][2] == None or dSMAs[x][3] == None or dSMAs[x][4] == None):
+		if (ATR[0] == None or dVolMA[x][0] == None or dSMAs[x][0] == None or dSMAs[x][1] == None or dSMAs[x][2] == None or dSMAs[x][3] == None or dSMAs[x][4] == None):
 			failure+=1
+			score_list['ATR_score'].append(None)
 			score_list['dVolMA_score'].append(None)
 			score_list['dSMA10_score'].append(None)
 			score_list['dSMA20_score'].append(None)
@@ -48,13 +56,14 @@ while (i < j):
 			success+=1
 
 			#100-(100/(1+positive diff)) and the postive diff = max - min , this is inspired of the RSI calculation method to keep values ranged between 0 and 100
+			score_list['ATR_score'].append(range_value(max([ATR[x][0], ATR[subject][0]])-min([ATR[x][0], ATR[subject][0]])))
 			score_list['dVolMA_score'].append(range_value(max([dVolMA[x][0], dVolMA[subject][0]])-min([dVolMA[x][0], dVolMA[subject][0]])))
 			score_list['dSMA10_score'].append(range_value(max([dSMAs[x][0], dSMAs[subject][0]])-min([dSMAs[x][0], dSMAs[subject][0]])))
 			score_list['dSMA20_score'].append(range_value(max([dSMAs[x][1], dSMAs[subject][1]])-min([dSMAs[x][1], dSMAs[subject][1]])))
 			score_list['dSMA50_score'].append(range_value(max([dSMAs[x][2], dSMAs[subject][2]])-min([dSMAs[x][2], dSMAs[subject][2]])))
 			score_list['dSMA100_score'].append(range_value(max([dSMAs[x][3], dSMAs[subject][3]])-min([dSMAs[x][3], dSMAs[subject][3]])))
 			score_list['dSMA200_score'].append(range_value(max([dSMAs[x][4], dSMAs[subject][4]])-min([dSMAs[x][4], dSMAs[subject][4]])))
-			combined = (score_list['dVolMA_score'][x] + score_list['dSMA10_score'][x] + score_list['dSMA20_score'][x] + score_list['dSMA50_score'][x] + score_list['dSMA100_score'][x] + score_list['dSMA200_score'][x]) / 6
+			combined = (score_list['ATR_score'][x] + score_list['dVolMA_score'][x] + score_list['dSMA10_score'][x] + score_list['dSMA20_score'][x] + score_list['dSMA50_score'][x] + score_list['dSMA100_score'][x] + score_list['dSMA200_score'][x]) / 7
 			score_list['combined'].append(combined)
 		score_list['date'].append(dVolMA[x][1])
 		x+=1
@@ -71,6 +80,7 @@ while (i < j):
     	)
     )
 	add_drawing(fig, score_list['date'], score_list['combined'], 'combined')
+	add_drawing(fig, score_list['date'], score_list['ATR_score'], 'ATR_score')
 	add_drawing(fig, score_list['date'], score_list['dVolMA_score'], 'dVolMA_score')
 	add_drawing(fig, score_list['date'], score_list['dSMA10_score'], 'dSMA10_score')
 	add_drawing(fig, score_list['date'], score_list['dSMA20_score'], 'dSMA20_score')
