@@ -26,7 +26,7 @@ while (i < j):
 	print(len(ATR))
 
 	size = len(dVolMA)
-	subject = size-1-52 #using last available period
+	subject = size-1-2 #using last available period
 	score_list = {
 		'ATR_score': [],
 		'dVolMA_score': [],

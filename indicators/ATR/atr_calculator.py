@@ -23,7 +23,12 @@ def atr_calculator(period, data, index):
 				count+=1
 			if (index-i-count < 0):
 				return(None)
-			tr = max((data[index-i][0]-data[index-i][1]),(data[index-i][0]-data[index-i-count][2]),(data[index-i][1]-data[index-i-count][2]))
+			high_low = (Decimal(data[index-i][0]-data[index-i][1]) / Decimal(data[index-i][0])) * 100
+			high_prevclose = (Decimal(data[index-i][0]-data[index-i-count][2]) / Decimal(data[index-i][0])) * 100
+			minimum = max(data[index-i][1],data[index-i-count][2])
+			maximum = min(data[index-i][1],data[index-i-count][2])
+			low_prevlose = (Decimal(maximum - minimum) / Decimal(maximum)) * 100
+			tr = max(high_low, high_prevclose, low_prevlose)
 			tmp = tmp + tr
 		i+=1
 	return(float(Decimal(tmp)/Decimal(period)))
