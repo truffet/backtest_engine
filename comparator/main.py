@@ -3,8 +3,8 @@ import plotly.graph_objects as go
 from decimal import *
 
 def range_value(value):
-	ranged_value = 100 - (100/Decimal(1+value))
-	return(ranged_value)
+	result = 100 - (100/Decimal(1+value))
+	return(result)
 
 def add_drawing(fig, date, score, name):
 	fig.add_trace(go.Scatter(x=date, y=score,
@@ -21,12 +21,8 @@ while (i < j):
 	dSMAs = fetch_data('*',('dSMAs_' + periods[i]))
 	ATR = fetch_data('*', ('ATR_' + periods[i]))
 
-	print(len(dVolMA))
-	print(len(dSMAs))
-	print(len(ATR))
-
 	size = len(dVolMA)
-	subject = size-1-2 #using last available period
+	subject = size-1-2-55 #OHLCVD to compare (index)
 	score_list = {
 		'ATR_score': [],
 		'dVolMA_score': [],
@@ -35,7 +31,8 @@ while (i < j):
 		'dSMA50_score': [],
 		'dSMA100_score': [],
 		'dSMA200_score': [],
-		'combined': [],
+		'combined_simple': [],
+		'combined_range': [],
 		'date': []
 	}
 	x = 0
@@ -51,20 +48,23 @@ while (i < j):
 			score_list['dSMA50_score'].append(None)
 			score_list['dSMA100_score'].append(None)
 			score_list['dSMA200_score'].append(None)
-			score_list['combined'].append(None)
+			score_list['combined_simple'].append(None)
+			score_list['combined_range'].append(None)
 		else:
 			success+=1
+			score_list['ATR_score'].append((max([ATR[x][0], ATR[subject][0]])-min([ATR[x][0], ATR[subject][0]])))
+			score_list['dVolMA_score'].append((max([dVolMA[x][0], dVolMA[subject][0]])-min([dVolMA[x][0], dVolMA[subject][0]])))
+			score_list['dSMA10_score'].append((max([dSMAs[x][0], dSMAs[subject][0]])-min([dSMAs[x][0], dSMAs[subject][0]])))
+			score_list['dSMA20_score'].append((max([dSMAs[x][1], dSMAs[subject][1]])-min([dSMAs[x][1], dSMAs[subject][1]])))
+			score_list['dSMA50_score'].append((max([dSMAs[x][2], dSMAs[subject][2]])-min([dSMAs[x][2], dSMAs[subject][2]])))
+			score_list['dSMA100_score'].append((max([dSMAs[x][3], dSMAs[subject][3]])-min([dSMAs[x][3], dSMAs[subject][3]])))
+			score_list['dSMA200_score'].append((max([dSMAs[x][4], dSMAs[subject][4]])-min([dSMAs[x][4], dSMAs[subject][4]])))
 
-			#100-(100/(1+positive diff)) and the postive diff = max - min , this is inspired of the RSI calculation method to keep values ranged between 0 and 100
-			score_list['ATR_score'].append(range_value(max([ATR[x][0], ATR[subject][0]])-min([ATR[x][0], ATR[subject][0]])))
-			score_list['dVolMA_score'].append(range_value(max([dVolMA[x][0], dVolMA[subject][0]])-min([dVolMA[x][0], dVolMA[subject][0]])))
-			score_list['dSMA10_score'].append(range_value(max([dSMAs[x][0], dSMAs[subject][0]])-min([dSMAs[x][0], dSMAs[subject][0]])))
-			score_list['dSMA20_score'].append(range_value(max([dSMAs[x][1], dSMAs[subject][1]])-min([dSMAs[x][1], dSMAs[subject][1]])))
-			score_list['dSMA50_score'].append(range_value(max([dSMAs[x][2], dSMAs[subject][2]])-min([dSMAs[x][2], dSMAs[subject][2]])))
-			score_list['dSMA100_score'].append(range_value(max([dSMAs[x][3], dSMAs[subject][3]])-min([dSMAs[x][3], dSMAs[subject][3]])))
-			score_list['dSMA200_score'].append(range_value(max([dSMAs[x][4], dSMAs[subject][4]])-min([dSMAs[x][4], dSMAs[subject][4]])))
-			combined = (score_list['ATR_score'][x] + score_list['dVolMA_score'][x] + score_list['dSMA10_score'][x] + score_list['dSMA20_score'][x] + score_list['dSMA50_score'][x] + score_list['dSMA100_score'][x] + score_list['dSMA200_score'][x]) / 7
-			score_list['combined'].append(combined)
+			combined_simple = (score_list['ATR_score'][x] + score_list['dVolMA_score'][x] + score_list['dSMA10_score'][x] + score_list['dSMA20_score'][x] + score_list['dSMA50_score'][x] + score_list['dSMA100_score'][x] + score_list['dSMA200_score'][x]) / 7
+			combined_range = range_value(combined_simple)
+			score_list['combined_simple'].append(combined_simple)
+			score_list['combined_range'].append(combined_range)
+
 		score_list['date'].append(dVolMA[x][1])
 		x+=1
 
@@ -79,7 +79,8 @@ while (i < j):
         	title=go.layout.Title(text=("Index Indicator for the " + dVolMA[subject][1].strftime("%m/%d/%Y")))
     	)
     )
-	add_drawing(fig, score_list['date'], score_list['combined'], 'combined')
+	add_drawing(fig, score_list['date'], score_list['combined_simple'], 'combined_simple')
+	add_drawing(fig, score_list['date'], score_list['combined_range'], 'combined_range')
 	add_drawing(fig, score_list['date'], score_list['ATR_score'], 'ATR_score')
 	add_drawing(fig, score_list['date'], score_list['dVolMA_score'], 'dVolMA_score')
 	add_drawing(fig, score_list['date'], score_list['dSMA10_score'], 'dSMA10_score')

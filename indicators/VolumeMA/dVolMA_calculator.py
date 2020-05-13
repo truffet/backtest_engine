@@ -1,13 +1,10 @@
 from decimal import *
 
 def dVolMA_calculator(VolMA, data, index):
-	if (VolMA == None):
+	if (VolMA == None or data[index][0] == None):
 		return(None)
-
-	if (data[index][0] >= VolMA):
-		d = float(Decimal(data[index][0])/Decimal(VolMA))
-		result = (d - 1) * 100
-	else:
-		d = float(Decimal(VolMA)/Decimal(data[index][0]))
-		result = (d - 1) * -100
+	if (VolMA == 0 or data[index][0] == 0):
+		return(None)
+	d = float(Decimal(data[index][0])/Decimal(VolMA))
+	result = (d - 1) * 100
 	return(result)
