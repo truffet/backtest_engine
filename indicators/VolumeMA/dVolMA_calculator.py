@@ -5,6 +5,6 @@ def dVolMA_calculator(VolMA, data, index):
 		return(None)
 	if (VolMA == 0 or data[index][0] == 0):
 		return(None)
-	d = float(Decimal(data[index][0])/Decimal(VolMA))
+	d = Decimal(data[index][0])/Decimal(VolMA)
 	result = (d - 1) * 100
-	return(result)
+	return(float(result))

@@ -20,4 +20,4 @@ def sma(period, data, index):
 		else:
 			tmp = tmp + data[index-i][0]
 		i+=1
-	return(float(Decimal(tmp)/Decimal(period)))
+	return(Decimal(tmp)/Decimal(period))

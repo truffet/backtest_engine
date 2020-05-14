@@ -20,10 +20,12 @@ while (i < j):
 	dVolMA = fetch_data('*', ('dVolumeMA_' + periods[i]))
 	dSMAs = fetch_data('*',('dSMAs_' + periods[i]))
 	ATR = fetch_data('*', ('ATR_' + periods[i]))
+	RSI = fetch_data('*', ('RSI_' + periods[i]))
 
 	size = len(dVolMA)
-	subject = size-1-2-55 #OHLCVD to compare (index)
+	subject = size-1-4 #OHLCVD to compare (index)
 	score_list = {
+		'RSI_score': [],
 		'ATR_score': [],
 		'dVolMA_score': [],
 		'dSMA10_score': [],
@@ -38,55 +40,61 @@ while (i < j):
 	x = 0
 	success, failure = 0, 0
 
-	while (x < subject):
-		if (ATR[0] == None or dVolMA[x][0] == None or dSMAs[x][0] == None or dSMAs[x][1] == None or dSMAs[x][2] == None or dSMAs[x][3] == None or dSMAs[x][4] == None):
-			failure+=1
-			score_list['ATR_score'].append(None)
-			score_list['dVolMA_score'].append(None)
-			score_list['dSMA10_score'].append(None)
-			score_list['dSMA20_score'].append(None)
-			score_list['dSMA50_score'].append(None)
-			score_list['dSMA100_score'].append(None)
-			score_list['dSMA200_score'].append(None)
-			score_list['combined_simple'].append(None)
-			score_list['combined_range'].append(None)
-		else:
-			success+=1
-			score_list['ATR_score'].append((max([ATR[x][0], ATR[subject][0]])-min([ATR[x][0], ATR[subject][0]])))
-			score_list['dVolMA_score'].append((max([dVolMA[x][0], dVolMA[subject][0]])-min([dVolMA[x][0], dVolMA[subject][0]])))
-			score_list['dSMA10_score'].append((max([dSMAs[x][0], dSMAs[subject][0]])-min([dSMAs[x][0], dSMAs[subject][0]])))
-			score_list['dSMA20_score'].append((max([dSMAs[x][1], dSMAs[subject][1]])-min([dSMAs[x][1], dSMAs[subject][1]])))
-			score_list['dSMA50_score'].append((max([dSMAs[x][2], dSMAs[subject][2]])-min([dSMAs[x][2], dSMAs[subject][2]])))
-			score_list['dSMA100_score'].append((max([dSMAs[x][3], dSMAs[subject][3]])-min([dSMAs[x][3], dSMAs[subject][3]])))
-			score_list['dSMA200_score'].append((max([dSMAs[x][4], dSMAs[subject][4]])-min([dSMAs[x][4], dSMAs[subject][4]])))
+	if (RSI[subject][0] == None or ATR[subject][0] == None or dVolMA[subject][0] == None or dSMAs[subject][0] == None or dSMAs[subject][1] == None or dSMAs[subject][2] == None or dSMAs[subject][3] == None or dSMAs[subject][4] == None):
+		print('Fatal Error, invalid subject. Please debug!')
+	else:
+		while (x < subject):
+			if (RSI[x][0] == None or ATR[x][0] == None or dVolMA[x][0] == None or dSMAs[x][0] == None or dSMAs[x][1] == None or dSMAs[x][2] == None or dSMAs[x][3] == None or dSMAs[x][4] == None):
+				failure+=1
+				score_list['RSI_score'].append(None)
+				score_list['ATR_score'].append(None)
+				score_list['dVolMA_score'].append(None)
+				score_list['dSMA10_score'].append(None)
+				score_list['dSMA20_score'].append(None)
+				score_list['dSMA50_score'].append(None)
+				score_list['dSMA100_score'].append(None)
+				score_list['dSMA200_score'].append(None)
+				score_list['combined_simple'].append(None)
+				score_list['combined_range'].append(None)
+			else:
+				success+=1
+				score_list['RSI_score'].append((max([RSI[x][0], RSI[subject][0]])-min([RSI[x][0], RSI[subject][0]])))
+				score_list['ATR_score'].append((max([ATR[x][0], ATR[subject][0]])-min([ATR[x][0], ATR[subject][0]])))
+				score_list['dVolMA_score'].append((max([dVolMA[x][0], dVolMA[subject][0]])-min([dVolMA[x][0], dVolMA[subject][0]])))
+				score_list['dSMA10_score'].append((max([dSMAs[x][0], dSMAs[subject][0]])-min([dSMAs[x][0], dSMAs[subject][0]])))
+				score_list['dSMA20_score'].append((max([dSMAs[x][1], dSMAs[subject][1]])-min([dSMAs[x][1], dSMAs[subject][1]])))
+				score_list['dSMA50_score'].append((max([dSMAs[x][2], dSMAs[subject][2]])-min([dSMAs[x][2], dSMAs[subject][2]])))
+				score_list['dSMA100_score'].append((max([dSMAs[x][3], dSMAs[subject][3]])-min([dSMAs[x][3], dSMAs[subject][3]])))
+				score_list['dSMA200_score'].append((max([dSMAs[x][4], dSMAs[subject][4]])-min([dSMAs[x][4], dSMAs[subject][4]])))
 
-			combined_simple = (score_list['ATR_score'][x] + score_list['dVolMA_score'][x] + score_list['dSMA10_score'][x] + score_list['dSMA20_score'][x] + score_list['dSMA50_score'][x] + score_list['dSMA100_score'][x] + score_list['dSMA200_score'][x]) / 7
-			combined_range = range_value(combined_simple)
-			score_list['combined_simple'].append(combined_simple)
-			score_list['combined_range'].append(combined_range)
+				combined_simple = (score_list['ATR_score'][x] + score_list['dVolMA_score'][x] + score_list['dSMA10_score'][x] + score_list['dSMA20_score'][x] + score_list['dSMA50_score'][x] + score_list['dSMA100_score'][x] + score_list['dSMA200_score'][x]) / 7
+				combined_range = range_value(combined_simple)
+				score_list['combined_simple'].append(combined_simple)
+				score_list['combined_range'].append(combined_range)
 
-		score_list['date'].append(dVolMA[x][1])
-		x+=1
+			score_list['date'].append(dVolMA[x][1])
+			x+=1
 
-	print('Total:', (subject - 1))
-	print('Miss:', failure)
-	print('Success:', success)
+		print('Total:', (subject - 1))
+		print('Miss:', failure)
+		print('Success:', success)
 
 
-	#display test
-	fig = go.Figure(
-		layout=go.Layout(
-        	title=go.layout.Title(text=("Index Indicator for the " + dVolMA[subject][1].strftime("%m/%d/%Y")))
+		#display test
+		fig = go.Figure(
+			layout=go.Layout(
+        		title=go.layout.Title(text=("Index Indicator for the " + dVolMA[subject][1].strftime("%m/%d/%Y")))
+    		)
     	)
-    )
-	add_drawing(fig, score_list['date'], score_list['combined_simple'], 'combined_simple')
-	add_drawing(fig, score_list['date'], score_list['combined_range'], 'combined_range')
-	add_drawing(fig, score_list['date'], score_list['ATR_score'], 'ATR_score')
-	add_drawing(fig, score_list['date'], score_list['dVolMA_score'], 'dVolMA_score')
-	add_drawing(fig, score_list['date'], score_list['dSMA10_score'], 'dSMA10_score')
-	add_drawing(fig, score_list['date'], score_list['dSMA20_score'], 'dSMA20_score')
-	add_drawing(fig, score_list['date'], score_list['dSMA50_score'], 'dSMA50_score')
-	add_drawing(fig, score_list['date'], score_list['dSMA100_score'], 'dSMA100_score')
-	add_drawing(fig, score_list['date'], score_list['dSMA200_score'], 'dSMA200_score')
-	fig.show()
+		add_drawing(fig, score_list['date'], score_list['combined_simple'], 'combined_simple')
+		add_drawing(fig, score_list['date'], score_list['combined_range'], 'combined_range')
+		add_drawing(fig, score_list['date'], score_list['RSI_score'], 'RSI_score')
+		add_drawing(fig, score_list['date'], score_list['ATR_score'], 'ATR_score')
+		add_drawing(fig, score_list['date'], score_list['dVolMA_score'], 'dVolMA_score')
+		add_drawing(fig, score_list['date'], score_list['dSMA10_score'], 'dSMA10_score')
+		add_drawing(fig, score_list['date'], score_list['dSMA20_score'], 'dSMA20_score')
+		add_drawing(fig, score_list['date'], score_list['dSMA50_score'], 'dSMA50_score')
+		add_drawing(fig, score_list['date'], score_list['dSMA100_score'], 'dSMA100_score')
+		add_drawing(fig, score_list['date'], score_list['dSMA200_score'], 'dSMA200_score')
+		fig.show()
 	i+=1
