@@ -11,27 +11,27 @@ def add_drawing(fig, date, score, name):
                     mode='markers',
                     name=name))
 
-periods = ['1D', '1W']
+periods = ['D', 'W']
 i, j = 0, len(periods)
 
 while (i < j):
 	
-	dVolMA = fetch_data('*', ('dVolumeMA_' + periods[i]))
-	dSMAs = fetch_data('*',('dSMAs_' + periods[i]))
-	ATR = fetch_data('*', ('ATR_' + periods[i]))
-	RSI = fetch_data('*', ('RSI_' + periods[i]))
+	PSMA = fetch_data('*', ('PSMA_' + periods[i]))
+	VSMA = fetch_data('*',('VSMA_' + periods[i]))
 
-	size = len(dVolMA)
-	subject = size-1-4 #OHLCVD to compare (index)
+	size = len(PSMA)
+	subject = size-1 #OHLCVD to compare (index)
 	score_list = {
-		'RSI_score': [],
-		'ATR_score': [],
-		'dVolMA_score': [],
-		'dSMA10_score': [],
-		'dSMA20_score': [],
-		'dSMA50_score': [],
-		'dSMA100_score': [],
-		'dSMA200_score': [],
+		'VSMA10_score': [],
+		'VSMA20_score': [],
+		'VSMA50_score': [],
+		'VSMA100_score': [],
+		'VSMA200_score': [],
+		'PSMA10_score': [],
+		'PSMA20_score': [],
+		'PSMA50_score': [],
+		'PSMA100_score': [],
+		'PSMA200_score': [],
 		'combined_simple': [],
 		'combined_range': [],
 		'date': []
@@ -39,39 +39,43 @@ while (i < j):
 	x = 0
 	success, failure = 0, 0
 
-	if (RSI[subject][0] == None or ATR[subject][0] == None or dVolMA[subject][0] == None or dSMAs[subject][0] == None or dSMAs[subject][1] == None or dSMAs[subject][2] == None or dSMAs[subject][3] == None or dSMAs[subject][4] == None):
+	if (VSMA[subject][0] == None or VSMA[subject][1] == None or VSMA[subject][2] == None or VSMA[subject][3] == None or VSMA[subject][4] == None or PSMA[subject][0] == None or PSMA[subject][1] == None or PSMA[subject][2] == None or PSMA[subject][3] == None or PSMA[subject][4] == None):
 		print('Fatal Error, invalid subject. Please debug!')
 	else:
 		while (x < subject):
-			if (RSI[x][0] == None or ATR[x][0] == None or dVolMA[x][0] == None or dSMAs[x][0] == None or dSMAs[x][1] == None or dSMAs[x][2] == None or dSMAs[x][3] == None or dSMAs[x][4] == None):
+			if (VSMA[x][0] == None or VSMA[x][1] == None or VSMA[x][2] == None or VSMA[x][3] == None or VSMA[x][4] == None or PSMA[x][0] == None or PSMA[x][1] == None or PSMA[x][2] == None or PSMA[x][3] == None or PSMA[x][4] == None):
 				failure+=1
-				score_list['RSI_score'].append(None)
-				score_list['ATR_score'].append(None)
-				score_list['dVolMA_score'].append(None)
-				score_list['dSMA10_score'].append(None)
-				score_list['dSMA20_score'].append(None)
-				score_list['dSMA50_score'].append(None)
-				score_list['dSMA100_score'].append(None)
-				score_list['dSMA200_score'].append(None)
+				score_list['VSMA10_score'].append(None)
+				score_list['VSMA20_score'].append(None)
+				score_list['VSMA50_score'].append(None)
+				score_list['VSMA100_score'].append(None)
+				score_list['VSMA200_score'].append(None)
+				score_list['PSMA10_score'].append(None)
+				score_list['PSMA20_score'].append(None)
+				score_list['PSMA50_score'].append(None)
+				score_list['PSMA100_score'].append(None)
+				score_list['PSMA200_score'].append(None)
 				score_list['combined_simple'].append(None)
 				score_list['combined_range'].append(None)
 			else:
 				success+=1
-				score_list['RSI_score'].append((max([RSI[x][0], RSI[subject][0]])-min([RSI[x][0], RSI[subject][0]])))
-				score_list['ATR_score'].append((max([ATR[x][0], ATR[subject][0]])-min([ATR[x][0], ATR[subject][0]])))
-				score_list['dVolMA_score'].append((max([dVolMA[x][0], dVolMA[subject][0]])-min([dVolMA[x][0], dVolMA[subject][0]])))
-				score_list['dSMA10_score'].append((max([dSMAs[x][0], dSMAs[subject][0]])-min([dSMAs[x][0], dSMAs[subject][0]])))
-				score_list['dSMA20_score'].append((max([dSMAs[x][1], dSMAs[subject][1]])-min([dSMAs[x][1], dSMAs[subject][1]])))
-				score_list['dSMA50_score'].append((max([dSMAs[x][2], dSMAs[subject][2]])-min([dSMAs[x][2], dSMAs[subject][2]])))
-				score_list['dSMA100_score'].append((max([dSMAs[x][3], dSMAs[subject][3]])-min([dSMAs[x][3], dSMAs[subject][3]])))
-				score_list['dSMA200_score'].append((max([dSMAs[x][4], dSMAs[subject][4]])-min([dSMAs[x][4], dSMAs[subject][4]])))
+				score_list['VSMA10_score'].append((max([VSMA[x][0], VSMA[subject][0]])-min([VSMA[x][0], VSMA[subject][0]])))
+				score_list['VSMA20_score'].append((max([VSMA[x][1], VSMA[subject][1]])-min([VSMA[x][1], VSMA[subject][1]])))
+				score_list['VSMA50_score'].append((max([VSMA[x][2], VSMA[subject][2]])-min([VSMA[x][2], VSMA[subject][2]])))
+				score_list['VSMA100_score'].append((max([VSMA[x][3], VSMA[subject][3]])-min([VSMA[x][3], VSMA[subject][3]])))
+				score_list['VSMA200_score'].append((max([VSMA[x][4], VSMA[subject][4]])-min([VSMA[x][4], VSMA[subject][4]])))
+				score_list['PSMA10_score'].append((max([PSMA[x][0], PSMA[subject][0]])-min([PSMA[x][0], PSMA[subject][0]])))
+				score_list['PSMA20_score'].append((max([PSMA[x][1], PSMA[subject][1]])-min([PSMA[x][1], PSMA[subject][1]])))
+				score_list['PSMA50_score'].append((max([PSMA[x][2], PSMA[subject][2]])-min([PSMA[x][2], PSMA[subject][2]])))
+				score_list['PSMA100_score'].append((max([PSMA[x][3], PSMA[subject][3]])-min([PSMA[x][3], PSMA[subject][3]])))
+				score_list['PSMA200_score'].append((max([PSMA[x][4], PSMA[subject][4]])-min([PSMA[x][4], PSMA[subject][4]])))
 
-				combined_simple = (score_list['ATR_score'][x] + score_list['dVolMA_score'][x] + score_list['dSMA10_score'][x] + score_list['dSMA20_score'][x] + score_list['dSMA50_score'][x] + score_list['dSMA100_score'][x] + score_list['dSMA200_score'][x]) / 7
+				combined_simple = Decimal(score_list['VSMA10_score'][x] + score_list['VSMA20_score'][x]*2 + score_list['VSMA50_score'][x]*5 + score_list['VSMA100_score'][x]*10 + score_list['VSMA200_score'][x]*20 + score_list['PSMA10_score'][x] + score_list['PSMA20_score'][x]*2 + score_list['PSMA50_score'][x]*5 + score_list['PSMA100_score'][x]*10 + score_list['PSMA200_score'][x]*20) / 76
 				combined_range = range_value(combined_simple)
 				score_list['combined_simple'].append(combined_simple)
 				score_list['combined_range'].append(combined_range)
 
-			score_list['date'].append(dVolMA[x][1])
+			score_list['date'].append(VSMA[x][5])
 			x+=1
 
 		print('Total:', (subject - 1))
@@ -82,18 +86,21 @@ while (i < j):
 		#display test
 		fig = go.Figure(
 			layout=go.Layout(
-        		title=go.layout.Title(text=("Index Indicator for the " + dVolMA[subject][1].strftime("%m/%d/%Y")))
+        		title=go.layout.Title(text=("Index Indicator for the " + VSMA[subject][5].strftime("%m/%d/%Y")))
     		)
     	)
 		add_drawing(fig, score_list['date'], score_list['combined_simple'], 'combined_simple')
 		add_drawing(fig, score_list['date'], score_list['combined_range'], 'combined_range')
-		add_drawing(fig, score_list['date'], score_list['RSI_score'], 'RSI_score')
-		add_drawing(fig, score_list['date'], score_list['ATR_score'], 'ATR_score')
-		add_drawing(fig, score_list['date'], score_list['dVolMA_score'], 'dVolMA_score')
-		add_drawing(fig, score_list['date'], score_list['dSMA10_score'], 'dSMA10_score')
-		add_drawing(fig, score_list['date'], score_list['dSMA20_score'], 'dSMA20_score')
-		add_drawing(fig, score_list['date'], score_list['dSMA50_score'], 'dSMA50_score')
-		add_drawing(fig, score_list['date'], score_list['dSMA100_score'], 'dSMA100_score')
-		add_drawing(fig, score_list['date'], score_list['dSMA200_score'], 'dSMA200_score')
+		add_drawing(fig, score_list['date'], score_list['VSMA10_score'], 'VSMA10_score')
+		add_drawing(fig, score_list['date'], score_list['VSMA20_score'], 'VSMA20_score')
+		add_drawing(fig, score_list['date'], score_list['VSMA50_score'], 'VSMA50_score')
+		add_drawing(fig, score_list['date'], score_list['VSMA100_score'], 'VSMA100_score')
+		add_drawing(fig, score_list['date'], score_list['VSMA200_score'], 'VSMA200_score')
+
+		add_drawing(fig, score_list['date'], score_list['PSMA10_score'], 'PSMA10_score')
+		add_drawing(fig, score_list['date'], score_list['PSMA20_score'], 'PSMA20_score')
+		add_drawing(fig, score_list['date'], score_list['PSMA50_score'], 'PSMA50_score')
+		add_drawing(fig, score_list['date'], score_list['PSMA100_score'], 'PSMA100_score')
+		add_drawing(fig, score_list['date'], score_list['PSMA200_score'], 'PSMA200_score')
 		fig.show()
 	i+=1

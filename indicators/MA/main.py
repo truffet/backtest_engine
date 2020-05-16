@@ -25,11 +25,5 @@ while(i < j):
 		if (x.startswith('P')):
 			fire_all(averages[x],(timeframe[i], periods, price_data, 'P'))
 		else:
-			fire_all(averages[x],(timeframe[i], periods, volume_data, 'v'))
+			fire_all(averages[x],(timeframe[i], periods, volume_data, 'V'))
 	i+=1
-
-#		df = pd.DataFrame.from_dict(ATR)
-#		store_ATR((name + '_' + periods[a]), df)
-#test = Moving_Average(attributes)
-#print(getattr(test, '10'))
-#print(dir(test))
