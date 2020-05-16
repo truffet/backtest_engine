@@ -4,8 +4,7 @@ from fetch_data import fetch_data
 from store_ATR import store_ATR
 from atr_calculator import atr_calculator
 
-#periods = ['1Min', '5Min', '15Min', '30Min', '1H', '2H', '4H', '6H', '12H', '24H']
-periods = ['1H', '4H', '24H']
+periods = ['D', 'W']
 a, b = 0, len(periods)
 
 while (a < b):

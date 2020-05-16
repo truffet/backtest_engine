@@ -4,7 +4,7 @@ from fetch_data import fetch_data
 from store_RSI import store_RSI
 from rsi_calculator import rsi_calculator
 
-periods = ['1H', '4H', '24H']
+periods = ['D', 'W']
 a, b = 0, len(periods)
 
 while (a < b):

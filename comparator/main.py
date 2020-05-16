@@ -11,8 +11,7 @@ def add_drawing(fig, date, score, name):
                     mode='markers',
                     name=name))
 
-#periods = ['1H', '4H', '24H']
-periods = ['24H']
+periods = ['1D', '1W']
 i, j = 0, len(periods)
 
 while (i < j):

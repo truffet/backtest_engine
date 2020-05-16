@@ -5,7 +5,7 @@ from sma import sma
 from dsma import dsma
 from store_SMA import store_SMA
 
-periods = ['1H', '4H', '24H']
+periods = ['D', 'W']
 a, b = 0, len(periods)
 
 while (a < b):

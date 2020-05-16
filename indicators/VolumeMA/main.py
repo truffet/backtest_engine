@@ -6,7 +6,7 @@ from VolMA_calculator import VolMA_calculator
 from dVolMA_calculator import dVolMA_calculator
 
 #periods = ['1Min', '5Min', '15Min', '30Min', '1H', '2H', '4H', '6H', '12H', '24H']
-periods = ['1H', '4H', '24H']
+periods = ['D', 'W']
 a, b = 0, len(periods)
 
 while (a < b):

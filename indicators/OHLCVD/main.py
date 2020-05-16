@@ -16,7 +16,7 @@ print("converted to dataframe")
 
 #create tables, calculate then store ohlcv data for each case study
 #ohlcv = ['1Min', '5Min', '15Min', '30Min', '1H', '2H', '4H', '6H', '12H', '24H']
-ohlcv = ['1H', '4H', '24H']
+ohlcv = ['D', 'W']
 
 i, j = 0, len(ohlcv)
 while(i < j):
