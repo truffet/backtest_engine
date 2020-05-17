@@ -20,7 +20,7 @@ while (i < j):
 	VSMA = fetch_data('*',('VSMA_' + periods[i]))
 
 	size = len(PSMA)
-	subject = size-1 #OHLCVD to compare (index)
+	subject = size-1-1 #OHLCVD to compare (index)
 	score_list = {
 		'VSMA10_score': [],
 		'VSMA20_score': [],

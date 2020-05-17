@@ -22,7 +22,10 @@ i, j = 0, len(ohlcv)
 while(i < j):
 	print("creating table and calculating ohlcv to then store it for every ", ohlcv[i])
 	#create_OHLC_tables(ohlcv[i])
-	tmp = df.resample(ohlcv[i]).agg({'price': 'ohlc', 'volume': 'sum'})
+	if (ohlcv[i] == 'W'):
+		tmp = df.resample('W-MON', label='left',closed='left').agg({'price': 'ohlc', 'volume': 'sum'})
+	else:
+		tmp = df.resample(ohlcv[i]).agg({'price': 'ohlc', 'volume': 'sum'})
 	tmp['timeframe'] = tmp.index
 	tmp.columns = tmp.columns.droplevel(0)
 	tmp.rename(columns={'': 'date'}, inplace=True)
