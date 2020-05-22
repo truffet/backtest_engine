@@ -1,6 +1,6 @@
 import mysql.connector
 
-def fetch_data(table_name):
+def fetch_data(what, where):
 	#connect to database
 	connection = mysql.connector.connect(
 		host="localhost",
@@ -10,7 +10,7 @@ def fetch_data(table_name):
 	)
 	connection.autocommit = True
 	mycursor = connection.cursor()
-	query = "SELECT high, low, close, date FROM " + table_name
+	query = "SELECT " + what + " FROM " + where
 	mycursor.execute(query)
 	#list of tuples
 	myresult = mycursor.fetchall()

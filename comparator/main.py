@@ -11,13 +11,13 @@ def add_drawing(fig, date, score, name):
                     mode='markers',
                     name=name))
 
-periods = ['D', 'W']
+periods = ['4H','D']
 i, j = 0, len(periods)
 
 while (i < j):
 	
-	PSMA = fetch_data('*', ('PSMA_' + periods[i]))
-	VSMA = fetch_data('*',('VSMA_' + periods[i]))
+	PSMA = fetch_data('*', ('PdSMA_' + periods[i]))
+	VSMA = fetch_data('*',('VdSMA_' + periods[i]))
 
 	size = len(PSMA)
 	subject = size-1-1 #OHLCVD to compare (index)

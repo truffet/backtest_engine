@@ -16,16 +16,12 @@ print("converted to dataframe")
 
 #create tables, calculate then store ohlcv data for each case study
 #ohlcv = ['1Min', '5Min', '15Min', '30Min', '1H', '2H', '4H', '6H', '12H', '24H']
-ohlcv = ['D', 'W']
+ohlcv = ['4H','D']
 
 i, j = 0, len(ohlcv)
 while(i < j):
 	print("creating table and calculating ohlcv to then store it for every ", ohlcv[i])
-	#create_OHLC_tables(ohlcv[i])
-	if (ohlcv[i] == 'W'):
-		tmp = df.resample('W-MON', label='left',closed='left').agg({'price': 'ohlc', 'volume': 'sum'})
-	else:
-		tmp = df.resample(ohlcv[i]).agg({'price': 'ohlc', 'volume': 'sum'})
+	tmp = df.resample(ohlcv[i]).agg({'price': 'ohlc', 'volume': 'sum'})
 	tmp['timeframe'] = tmp.index
 	tmp.columns = tmp.columns.droplevel(0)
 	tmp.rename(columns={'': 'date'}, inplace=True)
