@@ -9,8 +9,8 @@ def dsma(sma, data, index):
 		return(None)
 	if (sma == 0 or data[index][0] == 0):
 		return(None)
-	d = Decimal(data[index][0])/Decimal(sma)
-	result = (d - 1) * 100
+	d = data[index][0] - sma
+	result = (Decimal(d)/Decimal(sma)) * Decimal(100)
 	return(float(result))
 
 def sma_calculator(period, data, index):
