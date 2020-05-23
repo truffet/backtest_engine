@@ -3,9 +3,20 @@ from sma import sma
 from ema import ema
 from wma import wma
 
+def period_calculator(step, maximum):
+	i = step
+	result = []
+	while(i <= maximum):
+		result.append(i)
+		i+=step
+	return(result)
+
 #init params
 timeframe = ['4H','D']
-periods = [10, 20, 50, 100, 200]
+
+periods = period_calculator(5, 200)
+print("Periods:", periods)
+
 averages = {
 	'PSMA': [sma, ema, wma],
 	'VSMA': [sma, ema, wma]
