@@ -3,7 +3,7 @@ from utils.store_data import store_data
 from decimal import *
 import pandas as pd
 
-#function to compte some data and simple moving average
+
 def dsma(sma, data, index):
 	if (sma == None or data[index][0] == None):
 		return(None)
@@ -38,9 +38,11 @@ def sma_calculator(period, data, index):
 	return(sma, d)
 
 def sma(params):
+
 	timeframe, periods, data, name = params[0], params[1], params[2], params[3]
 	SMA = storage_base(periods)
 	dSMA = storage_base(periods)
+	print("calculating sma for", timeframe)#
 
 	i, j = 0, len(data)
 	y = len(periods)
@@ -60,6 +62,12 @@ def sma(params):
 		i+=1
 	df1 = pd.DataFrame.from_dict(SMA)
 	df2 = pd.DataFrame.from_dict(dSMA)
+
+	print("sma calculated for", timeframe)#
+
 	store_data((name + 'SMA_' + timeframe),df1)
+	print("sma stored for", timeframe)#
+
 	store_data((name + 'dSMA_' + timeframe),df2)
+	print("dsma stored for", timeframe)#
 	

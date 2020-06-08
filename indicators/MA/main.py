@@ -12,9 +12,10 @@ def period_calculator(step, maximum):
 	return(result)
 
 #init params
-timeframe = ['4H','D']
+#timeframe = ['4H','D']
+timeframe = ['1Min', '5Min', '15Min', '30Min', '1H', '2H', '4H', '6H', '12H', 'D']
 
-periods = period_calculator(5, 200)
+periods = period_calculator(20, 200)
 print("Periods:", periods)
 
 averages = {
@@ -31,7 +32,9 @@ i, j = 0, len(timeframe)
 while(i < j):
 	print(timeframe[i])
 	price_data = fetch_data('close, date', timeframe[i])
+	print("price data fetched for", timeframe[i])
 	volume_data = fetch_data('volume, date', timeframe[i])
+	print("volume data fetched for", timeframe[i])
 	for x in averages:
 		if (x.startswith('P')):
 			fire_all(averages[x],(timeframe[i], periods, price_data, 'P'))
