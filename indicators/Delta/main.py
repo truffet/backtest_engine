@@ -24,10 +24,13 @@ while(i < j):
 		tmp.pop() #pop date out
 		tmp.append(close_price[x][0]) #adding price close to delta calculation
 		if (tmp.count(None) > 0):
-			delta.append(None)
+			delta.append((None, None, None))
 		else:
-			d = 1 - (Decimal(min(tmp))/Decimal(max(tmp)))
-			delta.append(float(d)*100)
+			mini = min(tmp)
+			maxi = max(tmp)
+			d = 1 - (Decimal(mini)/Decimal(maxi))
+			#saving delta, minimum MA and maximum MA
+			delta.append((float(d)*100, mini, maxi))
 		x+=1
 	print("Delta calculated for", timeframe[i])
 

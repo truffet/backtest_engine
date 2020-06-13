@@ -7,7 +7,7 @@ import sys
 import pandas as pd
 
 #timeframe = ['1Min', '5Min', '15Min', '30Min', '1H', '2H', '4H', '6H', '12H', 'D']
-timeframe = ['4H']
+timeframe = ['12H']
 i, j = 0, len(timeframe)
 
 while (i < j):
@@ -22,7 +22,7 @@ while (i < j):
 		PriceSMA.pop(0)
 		delta.pop(0)
 		ohlc.pop(0)
-		
+
 	#deleting None data
 	x, y = 0, len(delta)
 	while(x < y):
@@ -45,12 +45,12 @@ while (i < j):
 	size = len(delta)
 	x, y = 0, size-1
 	all_star = []
-	win, loss = 0, 0
 	while (x < y):
 		z = y
+		print(str(x) + "/" + str(y) + " ; delta min: " + str(sorted_delta[x]))
 		while (z > x):
 			result = delta_strategy_backtest(sorted_delta[x], sorted_delta[z], delta, PriceSMA, ohlc)
-			if (result[0] > 100 and result[1] > 100):
+			if (result[0] > 100 and result[1] > 10):
 				print("\nsummary:")
 				print("min delta:", sorted_delta[x])
 				print("max delta:", sorted_delta[z])
@@ -63,7 +63,8 @@ while (i < j):
 			z-=1
 		x+=1
 	#store all star results
-	df = pd.DataFrame(all_star)
-	store_data(('allstar_' + timeframe[i]), df)
-	print("All star results stored for", timeframe[i])
+	if (all_star != []):
+		df = pd.DataFrame(all_star)
+		store_data(('allstar_' + timeframe[i]), df)
+		print("All star results stored for", timeframe[i])
 	i+=1
