@@ -1,13 +1,11 @@
 from fetch_data import fetch_data
-from delta_strategy_backtest import delta_strategy_backtest
 from store_data import store_data
 from time import sleep
-import itertools 
 import sys
 import pandas as pd
 
 #timeframe = ['1Min', '5Min', '15Min', '30Min', '1H', '2H', '4H', '6H', '12H', 'D']
-timeframe = ['12H']
+timeframe = ['D']
 i, j = 0, len(timeframe)
 
 while (i < j):
@@ -23,19 +21,6 @@ while (i < j):
 		delta.pop(0)
 		ohlc.pop(0)
 
-	#deleting None data
-	x, y = 0, len(delta)
-	while(x < y):
-		if (delta[x] == (None,)):
-			PriceSMA.pop(x)
-			delta.pop(x)
-			ohlc.pop(x)
-			y-=1
-		else:
-			x+=1
-
-	#convert list of tuples to list
-	delta = list(itertools.chain(*delta))
 	#create a copy before sorting
 	sorted_delta = delta.copy()
 	#sort from min to max
@@ -43,28 +28,5 @@ while (i < j):
 
 	#pairing up deltas for min and max test and returning profit/loss results for each
 	size = len(delta)
-	x, y = 0, size-1
-	all_star = []
-	while (x < y):
-		z = y
-		print(str(x) + "/" + str(y) + " ; delta min: " + str(sorted_delta[x]))
-		while (z > x):
-			result = delta_strategy_backtest(sorted_delta[x], sorted_delta[z], delta, PriceSMA, ohlc)
-			if (result[0] > 100 and result[1] > 10):
-				print("\nsummary:")
-				print("min delta:", sorted_delta[x])
-				print("max delta:", sorted_delta[z])
-				print("cumul profit %:", result[0])
-				print("number of trades:", result[1])
-				print("\n")
-				all_star.append((sorted_delta[x], sorted_delta[z], result[0], result[1]))
-				#sys.exit()
-				#sleep(2)
-			z-=1
-		x+=1
-	#store all star results
-	if (all_star != []):
-		df = pd.DataFrame(all_star)
-		store_data(('allstar_' + timeframe[i]), df)
-		print("All star results stored for", timeframe[i])
+	
 	i+=1

@@ -12,23 +12,22 @@ def period_calculator(step, maximum):
 	return(result)
 
 #init params
-#timeframe = ['4H','D']
 timeframe = ['1Min', '5Min', '15Min', '30Min', '1H', '2H', '4H', '6H', '12H', 'D']
 
 periods = period_calculator(20, 200)
 print("Periods:", periods)
 
 averages = {
-	'PSMA': [sma, ema, wma],
-	'VSMA': [sma, ema, wma]
+	'PMA': [sma, ema, wma],
+	'VMA': [sma, ema, wma]
 }
 
 def fire_all(func_list, params):
 	for f in func_list:
 		f(params)
 
-
 i, j = 0, len(timeframe)
+
 while(i < j):
 	print(timeframe[i])
 	price_data = fetch_data('close, date', timeframe[i])

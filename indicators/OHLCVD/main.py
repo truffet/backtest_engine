@@ -2,6 +2,7 @@ from fetch_data import fetch_data
 from store_OHLC import store_OHLC
 
 import pandas as pd
+import numpy as np
 
 #fetch data
 data = fetch_data()
@@ -16,7 +17,7 @@ print("converted to dataframe")
 
 #create tables, calculate then store ohlcv data for each case study
 ohlcv = ['1Min', '5Min', '15Min', '30Min', '1H', '2H', '4H', '6H', '12H', 'D']
-#ohlcv = ['4H','D']
+#ohlcv = ['D']
 
 i, j = 0, len(ohlcv)
 while(i < j):
@@ -25,5 +26,6 @@ while(i < j):
 	tmp['timeframe'] = tmp.index
 	tmp.columns = tmp.columns.droplevel(0)
 	tmp.rename(columns={'': 'date'}, inplace=True)
+	tmp = tmp.replace(to_replace='None', value=np.nan).dropna()
 	store_OHLC(ohlcv[i], tmp)
 	i+=1
