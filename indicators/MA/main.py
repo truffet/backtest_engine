@@ -13,6 +13,7 @@ def period_calculator(step, maximum):
 
 #init params
 timeframe = ['1Min', '5Min', '15Min', '30Min', '1H', '2H', '4H', '6H', '12H', 'D']
+#timeframe = ['D']
 
 periods = period_calculator(20, 200)
 print("Periods:", periods)

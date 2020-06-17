@@ -3,7 +3,8 @@ from store_data import store_data
 from decimal import *
 import pandas as pd
 
-timeframe = ['1Min', '5Min', '15Min', '30Min', '1H', '2H', '4H', '6H', '12H', 'D']
+#timeframe = ['1Min', '5Min', '15Min', '30Min', '1H', '2H', '4H', '6H', '12H', 'D']
+timeframe = ['D']
 
 i, j = 0, len(timeframe)
 
@@ -20,17 +21,19 @@ while(i < j):
 	delta = []
 	x, y = 0, len(PSMA)
 	while(x < y):
+
 		tmp = list(PSMA[x])
 		tmp.pop() #pop date out
 		tmp.append(close_price[x][0]) #adding price close to delta calculation
+
 		if (tmp.count(None) > 0):
 			delta.append((None, None, None))
 		else:
 			mini = min(tmp)
 			maxi = max(tmp)
-			d = 1 - (Decimal(mini)/Decimal(maxi))
+			d = float(((Decimal(maxi)/Decimal(mini))-1)*100)
 			#saving delta, minimum MA and maximum MA
-			delta.append((float(d)*100, mini, maxi))
+			delta.append((d, mini, maxi))
 		x+=1
 	print("Delta calculated for", timeframe[i])
 

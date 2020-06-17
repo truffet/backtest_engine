@@ -4,11 +4,11 @@ from decimal import *
 import pandas as pd
 
 def sma_calculator(period, data, index):
-	i, j = 0, period
 	tmp = 0
-	while(i < period):
-		tmp = tmp + data[i][0]
-		i+=1
+	a = period-1
+	while(a >= 0):
+		tmp = tmp + data[index-a][0]
+		a-=1
 	sma = float(Decimal(tmp)/Decimal(period))
 	return(sma)
 
@@ -22,7 +22,7 @@ def sma(params):
 	while(i < j):
 		x = 0
 		while (x < y):
-			if (i > periods[x]):
+			if (i > (periods[x]-1)):
 				sma = sma_calculator(periods[x], data, i)
 				SMA[periods[x]].append(sma)
 			else:
