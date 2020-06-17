@@ -3,8 +3,8 @@ from store_data import store_data
 from decimal import *
 import pandas as pd
 
-#timeframe = ['1Min', '5Min', '15Min', '30Min', '1H', '2H', '4H', '6H', '12H', 'D']
-timeframe = ['D']
+timeframe = ['1Min', '5Min', '15Min', '30Min', '1H', '2H', '4H', '6H', '12H', 'D']
+#timeframe = ['D']
 
 i, j = 0, len(timeframe)
 

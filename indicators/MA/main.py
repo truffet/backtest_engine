@@ -19,8 +19,8 @@ periods = period_calculator(20, 200)
 print("Periods:", periods)
 
 averages = {
-	'PMA': [sma, ema, wma],
-	'VMA': [sma, ema, wma]
+	'PMA': [ema, wma],
+	'VMA': [ema, wma]
 }
 
 def fire_all(func_list, params):

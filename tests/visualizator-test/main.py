@@ -4,11 +4,11 @@ from plotly.subplots import make_subplots
 from decimal import *
 
 def add_drawing(fig, date, score, name, row, col):
-	fig.add_trace(go.Scatter(x=date, y=score, mode='markers', name=name), row=row, col=col)
+	fig.add_trace(go.Scatter(x=date, y=score, mode='lines', name=name), row=row, col=col)
 	fig.update_yaxes(type="log", row=row, col=col)
 
 def add_drawing_nolog(fig, date, score, name, row, col):
-	fig.add_trace(go.Scatter(x=date, y=score, mode='markers', name=name), row=row, col=col)
+	fig.add_trace(go.Scatter(x=date, y=score, mode='lines', name=name), row=row, col=col)
 
 def range_value(value):
 	result = 100 - (Decimal(100)/Decimal(1+value))
@@ -21,7 +21,7 @@ while (i < j):
 	
 	ohlc = fetch_data('*', (timeframe[i]))
 	Delta = fetch_data('*', ('delta_' + timeframe[i]))
-	PSMA = fetch_data('*', ('PSMA_' + timeframe[i]))
+	PSMA = fetch_data('*', ('PEMA_' + timeframe[i]))
 	
 	#deleting data pre-2016
 	while((ohlc[0][5].strftime("%Y/%m/%d, %H:%M:%S")).startswith('2016') != True):
@@ -47,7 +47,7 @@ while (i < j):
 
 	### PSMA ###
 	sma20, sma40, sma60, sma80, sma100, sma120, sma140, sma160, sma180, sma200, date = zip(*PSMA)
-	add_drawing_nolog(fig, date, sma20, 'sma20', 1, 1)
+	add_drawing_nolog(fig, date, sma200, 'sma200', 1, 1)
 
 	#remove range slider for ohlc and show fig
 	fig.update(layout_xaxis_rangeslider_visible=False)
